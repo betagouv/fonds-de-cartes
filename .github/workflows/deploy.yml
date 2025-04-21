@@ -1,4 +1,4 @@
-name: Deploy static site
+name: Deploy README
 
 on:
   push:
@@ -11,6 +11,8 @@ permissions:
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,18 +21,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
-      - name: Create minimal site
-        run: |
-          mkdir -p _site
-          cp README.md _site/
-          cp index.html _site/
-          touch _site/.nojekyll
-      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_site"
+          path: "."
       
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4 
